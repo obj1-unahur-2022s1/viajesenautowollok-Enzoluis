@@ -1,0 +1,95 @@
+import remiseras.*
+import oficina.*
+
+test "ludmilaTest" {
+
+	assert.equals(18,ludmila.precioPorKm())
+	}
+test "anaMariaEconomicamenteEstableTest" {
+
+	assert.equals(30,anaMaria.precioPorKm())
+	assert.that(anaMaria.estadoEconomico())
+	}
+test "anaMariaEconomicamenteNoEstableTest" {
+
+	anaMaria.estadoEconomicoContrario()
+	assert.equals(25,anaMaria.precioPorKm())
+	assert.notThat(anaMaria.estadoEconomico())
+	}
+test "teresaTest" {
+	assert.equals(22,teresa.precioPorKm())
+}
+test "teresaNuevomontoTest" {
+	teresa.nuevoMonto(100)
+	assert.equals(100,teresa.precioPorKm())
+}
+test "melinaTrabajandoTest" {
+	melina.estaTrabajandoPara(ludmila)
+	assert.equals(15,melina.precioPorKm())
+}
+
+//REMISERAS viaje de 10 kilómetros
+test "roxanaTest" {
+	assert.equals(180,roxana.precioPorKmPactado(ludmila,10))
+	assert.equals(300,roxana.precioPorKmPactado(anaMaria,10))
+	assert.equals(220,roxana.precioPorKmPactado(teresa,10))
+}
+test "gabrielaTest" {
+	assert.equals(216,gabriela.precioPorKmPactado(ludmila,10))
+	assert.equals(360,gabriela.precioPorKmPactado(anaMaria,10))
+	assert.equals(264,gabriela.precioPorKmPactado(teresa,10))
+}
+test "marielaTest" {
+	assert.equals(180,mariela.precioPorKmPactado(ludmila,10))
+	assert.equals(300,mariela.precioPorKmPactado(anaMaria,10))
+	assert.equals(220,mariela.precioPorKmPactado(teresa,10))
+}
+test "juanaTest" {
+	assert.equals(200,juana.precioPorKmPactado(ludmila,10))
+	assert.equals(200,juana.precioPorKmPactado(anaMaria,10))
+	assert.equals(200,juana.precioPorKmPactado(teresa,10))
+}
+// Lucía y la cadete
+test "luciaYMelinaTest" {
+/* P.ej. si Lucía está reemplazando a Mariela, y Melina está trabajando para Ludmila, entonces:
+por un viaje de 10 kilómetros Lucía le cobra a Melina 150 pesos (el precio por kilómetro es 15,
+*  tres menos que lo que se pactó con Ludmila).
+por un viaje de 1 kilómetro le va a cobrar 50 pesos, que es el mínimo que establece Mariela.
+ */
+	lucia.estaReemplazando(mariela)
+	melina.estaTrabajandoPara(ludmila)
+	assert.equals(150,lucia.precioPorKmPactado(melina,10))
+	assert.equals(50,lucia.precioPorKmPactado(melina,1))
+}
+test "luciaYMelinaTest2" {
+/*
+Si en cambio Lucía está reemplazando a Gabriela, y manteniendo que Melina trabaja para Ludmila,
+*  entonces los valores para 10 y 1 km son 180 y 18, porque corre el 20% de recargo que 
+* establece Gabriela.
+ */	
+	lucia.estaReemplazando(gabriela)
+	melina.estaTrabajandoPara(ludmila)
+	assert.equals(180,lucia.precioPorKmPactado(melina,10))
+	assert.equals(18,lucia.precioPorKmPactado(melina,1))
+}
+test "oficinaTest" {
+/*Supongamos que en un momento dado la remisera de primera opción es Roxana, 
+ * y el de segunda opción es Juana. En este caso
+para un viaje de 10 kilómetros para Ana María, la remisera elegida es Juana,
+*  porque su precio de 200 pesos, es menor al de Roxana (300 pesos), 
+* y la diferencia es de más de 30 pesos.
+* 
+si el viaje es para Teresa, entonces Roxana ofrece 220 pesos y Juana 200.
+*  El precio de Juana es menor, pero la diferencia no llega a 30 pesos.
+*  Por lo tanto, la remisera elegido es Roxana.
+* 
+si el viaje es de 4 kilómetros para Teresa, entonces Roxana cobra 88 pesos y Juana 100.
+*  El precio de Roxana es menor, por lo tanto Roxana es la elegida.
+	 */
+	 oficina.asignarRemiseras(roxana, juana)
+	 assert.equals(juana,oficina.remiseraElegidaParaViaje(anaMaria, 10))
+	 oficina.asignarRemiseras(roxana, juana)
+	 assert.equals(roxana,oficina.remiseraElegidaParaViaje(teresa, 10))
+	 oficina.asignarRemiseras(roxana, juana)
+	 assert.equals(roxana,oficina.remiseraElegidaParaViaje(teresa, 4))
+}
