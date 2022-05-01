@@ -1,5 +1,6 @@
 /*
- * Oficina: 
+ * Oficina: Muy bien. Solo una sugerencia para simplificar los métodos
+ * de intercambiarRemiseras y remiseraElegidaParaViaje
  */
 import remiseras.*
 
