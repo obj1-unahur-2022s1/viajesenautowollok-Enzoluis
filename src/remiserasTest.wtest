@@ -1,3 +1,7 @@
+/*
+ * Test: Muy bien. Solo faltó hacer test del método de intercambiar remiseras, pero no se
+ * pedía expresamente en el enunciado. 
+ */
 import remiseras.*
 import oficina.*
 

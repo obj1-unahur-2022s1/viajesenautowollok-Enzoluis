@@ -1,13 +1,25 @@
+/*
+ * Clientes: Muy bien, solo unas observaciones mínimas en la utilización
+ *           de variables innecesarias. 
+ * Remiseras: Muy bien, idem con tema variables.
+ * Observaciones: Es conveniente agrupar los objetos que cumplen el mismo
+ *                contrato en un mismo archivo, y no mezclar con otros objetos.
+ *                En ese ejercicio convenía tener a todas las clientas en un archivo
+ *                y las remiseras en otro.
+ */
 // Clientes
 object ludmila {
-	method precioPorKm(){
-		return 18
-	}
+	/* Te dejo una forma resumida para implementar métodos de consulta */
+	method precioPorKm() = 18
 }
 
 object anaMaria {
+	/* La variable monto es innecesaria. Muy bien la implementación
+	 * del método estadoEconomicoContrario() para actualizar la variable.
+	 * Y te dejo una sugerencia para simplificar el código en el método de 
+	 * consulta que tiene condicional.
+	 */
 	var economicamenteEstable = true
-	var monto=25
 	
 	method estadoEconomico(){
 		return economicamenteEstable
@@ -15,12 +27,7 @@ object anaMaria {
 	method estadoEconomicoContrario(){
 		economicamenteEstable = not economicamenteEstable 
 	}
-	method precioPorKm(){
-		if(economicamenteEstable){
-			monto=30
-		}
-		return monto
-	}
+	method precioPorKm() = if(economicamenteEstable) 30 else 25
 }
 
 object  teresa {
@@ -50,31 +57,30 @@ object melina {
 //Remiseras
 
 object roxana {
-	method precioPorKmPactado(cliente, kms){
-		 return cliente.precioPorKm() * kms
-	}
+	/* te dejo la forma reducida */
+	method precioPorKmPactado(cliente, kms) = cliente.precioPorKm() * kms
 }
 
 object gabriela {
-	method precioPorKmPactado(cliente, kms){
-		return cliente.precioPorKm() * kms + (cliente.precioPorKm() * kms* 0.2)
-	}
+	/* está correcto el método precioPorKmPactado(cliente,kms). Te dejo
+	 * una variante para simplificar la expresión.
+	 */
+	method precioPorKmPactado(cliente, kms) = 
+		cliente.precioPorKm() * kms * 1.2
 }
 
 object mariela {
+	/* muy bien al usar el mensaje max() en lugar de condicional */
 	method precioPorKmPactado(cliente, kms){
 		return 50.max(cliente.precioPorKm() * kms)
 	}
 }
 
 object juana {
-	var monto = 100
-	method precioPorKmPactado(cliente, kms){
-		if(kms > 8){
-			monto = 200
-		}
-		return monto
-	}
+	/* La variable monto es innecesaria. Te dejo otra solución que tiene
+	 * también la simplificación del código
+	 */
+	method precioPorKmPactado(cliente, kms) = if(kms > 8) 200 else 100
 }
 
 object lucia {
