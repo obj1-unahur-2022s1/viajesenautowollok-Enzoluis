@@ -1,3 +1,7 @@
+/*
+ * Oficina: Muy bien. Solo una sugerencia para simplificar los métodos
+ * de intercambiarRemiseras y remiseraElegidaParaViaje
+ */
 import remiseras.*
 
 object oficina {
@@ -15,26 +19,20 @@ object oficina {
 		segundaRemisera = remisera
 	}
 	method intercambiarRemiseras() {
-		var intercambio
-		intercambio = primerRemisera
-		primerRemisera = segundaRemisera
-		segundaRemisera = intercambio
+		/*
+		 * Acá te dejo la forma de reutilizar el código para hacer el intercambio
+		 * No hace falta utilizar una variable auxiliar
+		 * Recordá que podes llamar a tus metodos con self
+		 */
+		self.asignarRemiseras(segundaRemisera,primerRemisera)
 	}
-	method remiseraElegidaParaViaje(cliente, kms) {
-		var chofer = primerRemisera
+	method remiseraElegidaParaViaje(cliente, kms) =
+		/* Te dejo un ejemplo para resolver esto de forma más simple
+		 * y sin usar variable auxiliar
+		 */
+		if (primerRemisera.precioPorKmPactado(cliente, kms) 
+		 	- segundaRemisera.precioPorKmPactado(cliente, kms) > 30) { 
+		 		segundaRemisera
+		} else { primerRemisera }		
 		
-		if(self.esMenorPrecioDe2daRemiseraQue1erRemisera(cliente, kms)
-			&& 30 < self.diferenciaDePrecioEntre2daY1raRemisera(cliente, kms)) {
-					 	chofer = segundaRemisera
-					 	self.intercambiarRemiseras()
-					 }
-					 return chofer
-	}
-	method esMenorPrecioDe2daRemiseraQue1erRemisera(cliente, kms) {
-		return segundaRemisera.precioPorKmPactado(cliente, kms) < primerRemisera.precioPorKmPactado(cliente, kms)
-	}
-	method diferenciaDePrecioEntre2daY1raRemisera(cliente, kms){
-		return (segundaRemisera.precioPorKmPactado(cliente, kms) - 
-					 primerRemisera.precioPorKmPactado(cliente, kms)).abs()
-	}
 }
